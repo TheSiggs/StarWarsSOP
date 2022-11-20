@@ -5,20 +5,24 @@ async function getCards() {
   const toons = await resp.json();
   const cardsContainer = document.getElementById('cards-container');
   toons.forEach(toon => {
-    const container = document.createElement('div');
-    container.className = 'smash--card';
-    const image = document.createElement('img');
-    image.src = toon.image;
-    container.appendChild(image);
+    fetch(toon.image).then(r => {
+      if (r.status === 200) {
+        const container = document.createElement('div');
+        container.className = 'smash--card';
+        const image = document.createElement('img');
+        image.src = toon.image;
+        container.appendChild(image);
 
-    const name = document.createElement('h3');
-    name.innerHTML = toon.name;
-    container.appendChild(name);
+        const name = document.createElement('h3');
+        name.innerHTML = toon.name;
+        container.appendChild(name);
 
-    // const description = document.createElement('p');
-    // description.innerHTML = toon.title;
-    // container.appendChild(description);
-    cardsContainer.appendChild(container);
+        // const description = document.createElement('p');
+        // description.innerHTML = toon.title;
+        // container.appendChild(description);
+        cardsContainer.appendChild(container);
+      }
+    });
   });
 }
 
